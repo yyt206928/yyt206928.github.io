@@ -1,0 +1,155 @@
+index.html
+style.css
+main.js
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>杨宇彤 · 个人主页 | Yutong Yang · Homepage</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="lang-toggle">
+    <button id="zh-btn">中文</button>
+    <button id="en-btn">English</button>
+  </div>
+  <div class="container">
+    <h1 id="name"></h1>
+    <div id="basic-info"></div>
+    <section>
+      <h2 id="intro-title"></h2>
+      <p id="intro"></p>
+    </section>
+    <section>
+      <h2 id="skills-title"></h2>
+      <ul id="skills"></ul>
+    </section>
+    <section>
+      <h2 id="education-title"></h2>
+      <ul id="education"></ul>
+    </section>
+    <footer>
+      <p id="update"></p>
+    </footer>
+  </div>
+  <script src="main.js"></script>
+</body>
+</html>
+body {
+  font-family: 'Segoe UI', 'PingFang SC', Arial, sans-serif;
+  margin: 0;
+  background: #f8f9fb;
+  color: #222;
+}
+
+.container {
+  max-width: 680px;
+  margin: 48px auto;
+  background: #fff;
+  padding: 36px 28px 18px 28px;
+  border-radius: 16px;
+  box-shadow: 0 4px 32px 0 rgba(0,0,0,0.11);
+}
+
+h1 {
+  margin-bottom: 12px;
+  font-size: 2.2em;
+  color: #3178c6;
+  letter-spacing: 2px;
+}
+
+section { margin-bottom: 22px; }
+
+h2 { margin: 14px 0 8px 0; color: #2d4159; font-size:1.14em;}
+
+.lang-toggle {
+  display: flex;
+  justify-content: flex-end;
+  padding: 8px 26px 0 0;
+}
+
+.lang-toggle button {
+  background: #edf4fd;
+  border: none;
+  color: #3178c6;
+  padding: 6px 18px;
+  margin-left: 8px;
+  font-size: 1em;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background .2s, color .2s;
+}
+
+.lang-toggle button.active, .lang-toggle button:hover {
+  background: #3178c6;
+  color: #fff;
+}
+
+footer {
+  margin-top: 16px;
+  font-size: 0.98em;
+  color: #7d8792;
+  text-align: right;
+}
+const data = {
+  zh: {
+    name: "杨宇彤",
+    basic: `
+      <b>学校/专业：</b>华东政法大学 会计学<br>
+      <b>研究兴趣/方向：</b>司法会计<br>
+      <b>联系方式：</b><a href="mailto:2959510338@qq.com">2959510338@qq.com</a>
+    `,
+    introTitle: "个人简介",
+    intro: "热爱会计与法律交叉领域，具备扎实的专业知识和实践能力，目标在司法会计领域贡献自己的价值。",
+    skillsTitle: "技能",
+    skills: ["Python", "数据分析", "计量/统计", "写作"],
+    educationTitle: "教育经历 / 课程经历",
+    education: [
+      "华东政法大学 会计学（2022-2026）",
+      "核心课程：会计学原理、财务管理、审计学、经济法、司法会计等"
+    ],
+    update: "最后更新日期：" + new Date().toLocaleDateString(),
+  },
+  en: {
+    name: "Yutong Yang",
+    basic: `
+      <b>University / Major:</b> East China University of Political Science and Law, Accounting<br>
+      <b>Research Interests / Career Direction:</b> Forensic Accounting<br>
+      <b>Email:</b> <a href="mailto:2959510338@qq.com">2959510338@qq.com</a>
+    `,
+    introTitle: "Profile",
+    intro: "Passionate about the intersection of accounting and law, solid academic background and hands-on experience, aiming to contribute to the field of forensic accounting.",
+    skillsTitle: "Skills",
+    skills: ["Python", "Data Analysis", "Econometrics/Statistics", "Writing"],
+    educationTitle: "Education / Courses",
+    education: [
+      "East China University of Political Science and Law, Accounting (2022-2026)",
+      "Core Courses: Accounting Principles, Financial Management, Auditing, Economic Law, Forensic Accounting"
+    ],
+    update: "Last updated: " + new Date().toLocaleDateString(),
+  }
+};
+
+// UI Elements
+const $ = (id) => document.getElementById(id);
+const langBtns = { zh: $("zh-btn"), en: $("en-btn") };
+
+function render(lang) {
+  $("name").innerText = data[lang].name;
+  $("basic-info").innerHTML = data[lang].basic;
+  $("intro-title").innerText = data[lang].introTitle;
+  $("intro").innerText = data[lang].intro;
+  $("skills-title").innerText = data[lang].skillsTitle;
+  $("skills").innerHTML = data[lang].skills.map(s=>`<li>${s}</li>`).join('');
+  $("education-title").innerText = data[lang].educationTitle;
+  $("education").innerHTML = data[lang].education.map(e=>`<li>${e}</li>`).join('');
+  $("update").innerText = data[lang].update;
+  Object.keys(langBtns).forEach(k => langBtns[k].classList.toggle('active', k===lang));
+}
+
+langBtns.zh.onclick = ()=>render('zh');
+langBtns.en.onclick = ()=>render('en');
+
+// Default: 中文
+render('zh');
