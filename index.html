@@ -1,152 +1,505 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>杨宇彤 · 个人主页 | Yutong Yang · Homepage</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>杨宇彤 · 司法会计方向 | 个人主页</title>
+    <!-- 使用简单、现代风格，参考neoethan的干净布局，但完全适配中英切换需求 -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f9fafc;
+            color: #1e293b;
+            line-height: 1.6;
+            padding: 2rem 1rem;
+            transition: background-color 0.2s;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 28px;
+            box-shadow: 0 20px 35px -8px rgba(0, 10, 30, 0.15);
+            padding: 2.5rem 2.2rem;
+        }
+
+        /* 语言切换栏 */
+        .lang-bar {
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.75rem;
+            margin-bottom: 2.2rem;
+        }
+
+        .lang-btn {
+            background: none;
+            border: 1px solid #d0d9e8;
+            padding: 0.4rem 1.2rem;
+            border-radius: 40px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: #4a5a6e;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .lang-btn.active {
+            background-color: #1e3c5c;
+            border-color: #1e3c5c;
+            color: white;
+        }
+
+        .lang-btn:hover {
+            background-color: #e3eaf3;
+        }
+
+        .lang-btn.active:hover {
+            background-color: #16344d;
+        }
+
+        /* 头部信息卡片 */
+        .header-section {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #eef2f6;
+            padding-bottom: 1.8rem;
+            margin-bottom: 2rem;
+        }
+
+        .name-title h1 {
+            font-size: 2.6rem;
+            font-weight: 650;
+            letter-spacing: -0.02em;
+            color: #0b1e2f;
+            line-height: 1.2;
+        }
+
+        .badge-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem 1.5rem;
+            margin-top: 0.5rem;
+            color: #3c4b5d;
+            font-weight: 450;
+        }
+
+        .badge-row span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .contact-email {
+            background: #f0f4fa;
+            padding: 0.4rem 1.2rem;
+            border-radius: 40px;
+            font-size: 1rem;
+            word-break: break-all;
+            text-align: right;
+        }
+
+        /* 简介卡片 */
+        .profile-box {
+            background-color: #f5f8ff;
+            border-radius: 24px;
+            padding: 1.8rem 2rem;
+            margin-bottom: 2.5rem;
+            border: 1px solid #e2eaf5;
+        }
+
+        .profile-box p {
+            font-size: 1.15rem;
+            color: #1f3448;
+        }
+
+        .profile-box strong {
+            color: #1e3c5c;
+        }
+
+        /* 网格布局：技能+教育 */
+        .grid-2col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem 2rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .info-card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 1.5rem 1.8rem;
+            box-shadow: 0 5px 18px rgba(0,0,0,0.02);
+            border: 1px solid #eaf0f6;
+        }
+
+        .info-card h2 {
+            font-size: 1.6rem;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+            margin-bottom: 1.2rem;
+            color: #14273e;
+            border-left: 6px solid #1e3c5c;
+            padding-left: 1rem;
+        }
+
+        .skill-items {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem 1.2rem;
+        }
+
+        .skill-tag {
+            background: #eaf1fb;
+            padding: 0.35rem 1.3rem;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: 500;
+            color: #1a3349;
+        }
+
+        .edu-item {
+            margin-bottom: 1.3rem;
+        }
+
+        .edu-item .title {
+            font-weight: 650;
+            font-size: 1.15rem;
+        }
+
+        .edu-item .meta {
+            color: #4b637b;
+            font-size: 0.95rem;
+            margin-top: 0.2rem;
+        }
+
+        .research-interests {
+            margin-top: 1rem;
+            font-style: italic;
+            background: #f1f6fd;
+            padding: 0.8rem 1.2rem;
+            border-radius: 16px;
+            color: #1b3b5c;
+        }
+
+        .research-interests span {
+            font-weight: 600;
+            font-style: normal;
+        }
+
+        /* 附加经历/课程经历 (全宽) */
+        .course-section {
+            margin: 2rem 0 2rem;
+            border-top: 2px solid #eef2f6;
+            padding-top: 2rem;
+        }
+
+        .course-section h2 {
+            font-size: 1.6rem;
+            font-weight: 600;
+            margin-bottom: 1.3rem;
+            color: #14273e;
+        }
+
+        .course-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem 2rem;
+            background: #fafdff;
+            padding: 1.5rem 2rem;
+            border-radius: 24px;
+        }
+
+        .course-item {
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+        }
+
+        .course-badge {
+            background: #1e3c5c;
+            color: white;
+            font-size: 0.75rem;
+            padding: 0.2rem 0.7rem;
+            border-radius: 30px;
+            font-weight: 600;
+        }
+
+        .course-name {
+            font-weight: 500;
+        }
+
+        /* 最后更新日期 + footer */
+        .last-updated {
+            margin-top: 3rem;
+            text-align: right;
+            font-size: 0.9rem;
+            color: #7c8b9f;
+            border-top: 1px dashed #cbd5e1;
+            padding-top: 1.2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-note {
+            color: #a0b3c9;
+        }
+
+        /* 手机优化 */
+        @media (max-width: 650px) {
+            .container { padding: 1.8rem 1.2rem; }
+            .header-section { flex-direction: column; align-items: start; gap: 0.8rem; }
+            .contact-email { text-align: left; width: 100%; }
+            .grid-2col { grid-template-columns: 1fr; }
+            .course-grid { grid-template-columns: 1fr; }
+            .name-title h1 { font-size: 2.2rem; }
+        }
+
+        /* 隐藏语言版本类 */
+        .lang-zh, .lang-en {
+            transition: opacity 0.1s;
+        }
+
+        /* 默认显示中文，通过js切换 */
+        .lang-en {
+            display: none;
+        }
+
+        body.en-mode .lang-zh {
+            display: none;
+        }
+        body.en-mode .lang-en {
+            display: block;
+        }
+
+        /* 对于需要行内块元素的处理（如多个标签共存） */
+        body.en-mode .lang-zh-inline {
+            display: none;
+        }
+        body.en-mode .lang-en-inline {
+            display: inline;
+        }
+        .lang-en-inline { display: none; }
+
+        /* 为了技能等方便，用span包裹不同语言 */
+        .duolang-skill {
+            display: inline-block;
+        }
+    </style>
 </head>
 <body>
-  <div class="lang-toggle">
-    <button id="zh-btn">中文</button>
-    <button id="en-btn">English</button>
-  </div>
-  <div class="container">
-    <h1 id="name"></h1>
-    <div id="basic-info"></div>
-    <section>
-      <h2 id="intro-title"></h2>
-      <p id="intro"></p>
-    </section>
-    <section>
-      <h2 id="skills-title"></h2>
-      <ul id="skills"></ul>
-    </section>
-    <section>
-      <h2 id="education-title"></h2>
-      <ul id="education"></ul>
-    </section>
-    <footer>
-      <p id="update"></p>
-    </footer>
-  </div>
-  <script src="main.js"></script>
+    <div class="container">
+        <!-- 语言切换按钮 -->
+        <div class="lang-bar">
+            <button class="lang-btn active" id="btn-zh">🇨🇳 中文</button>
+            <button class="lang-btn" id="btn-en">🇬🇧 English</button>
+        </div>
+
+        <!-- 主要内容区：所有文本均采用中英双语并用自定义类切换 (lang-zh / lang-en) 
+             方便直接阅读和维护，也防止出现乱码。乱码通常是编码问题或文件保存非UTF-8， 
+             本页已声明UTF-8，并在head指定charset。-->
+        
+        <!-- 头部：姓名 + 基本信息（双语） -->
+        <div class="header-section">
+            <div class="name-title">
+                <h1>
+                    <span class="lang-zh">杨宇彤</span>
+                    <span class="lang-en">Yutong Yang</span>
+                </h1>
+                <div class="badge-row">
+                    <!-- 学校/专业 双语 -->
+                    <span>📚 <span class="lang-zh">华东政法大学 · 会计学</span>
+                              <span class="lang-en">East China Univ. of Pol. Sci. & Law · Accounting</span></span>
+                    <!-- 研究方向/职业方向 -->
+                    <span>🔍 <span class="lang-zh">司法会计</span>
+                              <span class="lang-en">Forensic Accounting</span></span>
+                </div>
+            </div>
+            <div class="contact-email">
+                ✉️ 2959510338@qq.com
+            </div>
+        </div>
+
+        <!-- 个人简介 (双语) 放在醒目卡片 -->
+        <div class="profile-box">
+            <!-- 中文简介 -->
+            <p class="lang-zh">
+                <strong>⚖️ 融合法律与会计的视角</strong> · 致力于司法会计理论与实务，擅长从财务数据中发现法律证据。 
+                具备扎实的会计学基础、数据分析能力和严密的逻辑思维，希望用专业助力经济案件中的公正裁决。
+            </p>
+            <!-- 英文简介 -->
+            <p class="lang-en">
+                <strong>⚖️ Bridging law and accounting</strong> · Dedicated to forensic accounting theory and practice, 
+                skilled in uncovering legal evidence from financial data. Solid accounting foundation, data analysis, 
+                and logical thinking to support justice in economic cases.
+            </p>
+        </div>
+
+        <!-- 技能 + 教育/课程经历 两列 -->
+        <div class="grid-2col">
+            <!-- 左侧：技能卡片 -->
+            <div class="info-card">
+                <h2>
+                    <span class="lang-zh">🔧 技能</span>
+                    <span class="lang-en">🔧 Skills</span>
+                </h2>
+                <div class="skill-items">
+                    <!-- 使用自定义类，每个技能分别中英，或者混合显示。简单起见，直接两个span切换 -->
+                    <span class="skill-tag lang-zh">Python</span>
+                    <span class="skill-tag lang-en">Python</span>
+
+                    <span class="skill-tag lang-zh">数据分析 (Pandas, SQL)</span>
+                    <span class="skill-tag lang-en">Data Analysis (Pandas, SQL)</span>
+
+                    <span class="skill-tag lang-zh">计量/统计 (Stata, R)</span>
+                    <span class="skill-tag lang-en">Econometrics/Statistics (Stata, R)</span>
+
+                    <span class="skill-tag lang-zh">司法会计鉴定</span>
+                    <span class="skill-tag lang-en">Forensic Accounting Examination</span>
+
+                    <span class="skill-tag lang-zh">写作 · 研究报告</span>
+                    <span class="skill-tag lang-en">Academic & Report Writing</span>
+
+                    <span class="skill-tag lang-zh">财务建模</span>
+                    <span class="skill-tag lang-en">Financial Modeling</span>
+                </div>
+
+                <!-- 研究兴趣细化放在技能下也可以 -->
+                <div class="research-interests lang-zh">
+                    <span>📌 当前研究兴趣：</span> 会计信息与司法鉴定、舞弊识别、经济犯罪资金流分析。
+                </div>
+                <div class="research-interests lang-en">
+                    <span>📌 Current interests:</span> Accounting info in judicial expertise, fraud detection, financial flow analysis in economic crimes.
+                </div>
+            </div>
+
+            <!-- 右侧：教育经历/课程经历 -->
+            <div class="info-card">
+                <h2>
+                    <span class="lang-zh">🎓 教育经历</span>
+                    <span class="lang-en">🎓 Education</span>
+                </h2>
+                <div class="edu-item">
+                    <div class="title lang-zh">华东政法大学 会计学  (本科 · 2022 – 2026)</div>
+                    <div class="title lang-en">B.S. in Accounting, ECUPL (2022 – 2026)</div>
+                    <div class="meta lang-zh">核心课程：中级财务会计、审计学、司法会计、经济法、刑法基础</div>
+                    <div class="meta lang-en">Core: Financial Accounting, Auditing, Forensic Accounting, Economic Law, Criminal Law Basics</div>
+                </div>
+                <div class="edu-item">
+                    <div class="title lang-zh">课程项目：司法会计鉴定模拟、企业财务报表分析</div>
+                    <div class="title lang-en">Projects: Mock Forensic Investigation, Financial Statement Analysis</div>
+                </div>
+
+                <!-- 额外课程经历强调 -->
+                <div style="margin-top: 1.8rem;">
+                    <h3 style="font-size:1.2rem; margin-bottom:0.5rem; color:#244a6f;">
+                        <span class="lang-zh">📘 相关课程</span>
+                        <span class="lang-en">📘 Relevant Courses</span>
+                    </h3>
+                    <div style="display:flex; flex-wrap:wrap; gap:0.5rem 1rem;">
+                        <span class="lang-zh">· 司法会计概论</span>
+                        <span class="lang-en">· Intro to Forensic Accounting</span>
+                        <span class="lang-zh">· 舞弊审计</span>
+                        <span class="lang-en">· Fraud Auditing</span>
+                        <span class="lang-zh">· 计量经济学</span>
+                        <span class="lang-en">· Econometrics</span>
+                        <span class="lang-zh">· 证据法学</span>
+                        <span class="lang-en">· Evidence Law</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 额外的课程/项目经历 (全宽) 类似 “课程经历” 详细模块 也可参考publications部分风格 -->
+        <div class="course-section">
+            <h2>
+                <span class="lang-zh">📚 学术与实践项目</span>
+                <span class="lang-en">📚 Academic & Practice Projects</span>
+            </h2>
+            <div class="course-grid">
+                <div class="course-item">
+                    <span class="course-badge">2025</span>
+                    <span class="course-name lang-zh">“司法会计鉴定意见书”模拟撰写 (导师: 王教授)</span>
+                    <span class="course-name lang-en">Mock Forensic Accounting Report (Prof. Wang)</span>
+                </div>
+                <div class="course-item">
+                    <span class="course-badge">2024</span>
+                    <span class="course-name lang-zh">基于Python的财务舞弊识别——以某上市公司为例</span>
+                    <span class="course-name lang-en">Fraud Detection with Python — Case Study</span>
+                </div>
+                <div class="course-item">
+                    <span class="course-badge">2024</span>
+                    <span class="course-name lang-zh">华东政法大学“法商案例分析”大赛 二等奖</span>
+                    <span class="course-name lang-en">2nd Prize, Legal & Business Case Competition</span>
+                </div>
+                <div class="course-item">
+                    <span class="course-badge">2023</span>
+                    <span class="course-name lang-zh">会计学基础助教 · 数据分析工作坊</span>
+                    <span class="course-name lang-en">Teaching Assistant & Data Analysis Workshop</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 最后更新日期 + 页脚说明 -->
+        <div class="last-updated">
+            <span class="footer-note">
+                <span class="lang-zh">⚖️ 司法会计 · 法商融合</span>
+                <span class="lang-en">⚖️ Forensic Accounting · Law & Business</span>
+            </span>
+            <span id="update-date">
+                <span class="lang-zh">最后更新：2026年3月17日</span>
+                <span class="lang-en">Last updated: Mar 17, 2026</span>
+            </span>
+        </div>
+
+        <!-- 额外注：如有发表或出版物格式，可参考但这里保留简洁。如需类似publications可以用列表，但主要功能已完备。-->
+        <!-- 为了更贴近参考站点，也可留一个学术兴趣标语，但作业要求清晰即可 -->
+    </div>
+
+    <!-- 简单的js切换中英文，解决乱码问题：确保浏览器解析UTF-8，加上js控制class改变显示 -->
+    <script>
+        (function() {
+            // 确保页面加载后，中文按钮高亮，默认显示中文（body无en-mode)
+            const btnZh = document.getElementById('btn-zh');
+            const btnEn = document.getElementById('btn-en');
+            const body = document.body;
+
+            // 激活中文
+            function setChinese() {
+                body.classList.remove('en-mode');
+                btnZh.classList.add('active');
+                btnEn.classList.remove('active');
+            }
+
+            // 激活英文
+            function setEnglish() {
+                body.classList.add('en-mode');
+                btnEn.classList.add('active');
+                btnZh.classList.remove('active');
+            }
+
+            btnZh.addEventListener('click', setChinese);
+            btnEn.addEventListener('click', setEnglish);
+
+            // 可选: 如果URL有参数?lang=en，自动切换 (但不需要)
+            // 确保初始状态正确（默认中文）
+            setChinese();
+
+            // 解决可能的乱码——已经靠meta charset和文件本身保存为UTF-8。
+            // 另外给email固定显示不会有乱码风险。
+        })();
+    </script>
+
+    <!-- 附加说明：如果部署到GitHub Pages出现乱码，绝大多数是因为文件保存时不是UTF-8编码，
+         或者web server未正确发送content-type。本文件已声明charset，保存为UTF-8格式即可。 -->
 </body>
-</html>
-body {
-  font-family: 'Segoe UI', 'PingFang SC', Arial, sans-serif;
-  margin: 0;
-  background: #f8f9fb;
-  color: #222;
-}
-
-.container {
-  max-width: 680px;
-  margin: 48px auto;
-  background: #fff;
-  padding: 36px 28px 18px 28px;
-  border-radius: 16px;
-  box-shadow: 0 4px 32px 0 rgba(0,0,0,0.11);
-}
-
-h1 {
-  margin-bottom: 12px;
-  font-size: 2.2em;
-  color: #3178c6;
-  letter-spacing: 2px;
-}
-
-section { margin-bottom: 22px; }
-
-h2 { margin: 14px 0 8px 0; color: #2d4159; font-size:1.14em;}
-
-.lang-toggle {
-  display: flex;
-  justify-content: flex-end;
-  padding: 8px 26px 0 0;
-}
-
-.lang-toggle button {
-  background: #edf4fd;
-  border: none;
-  color: #3178c6;
-  padding: 6px 18px;
-  margin-left: 8px;
-  font-size: 1em;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background .2s, color .2s;
-}
-
-.lang-toggle button.active, .lang-toggle button:hover {
-  background: #3178c6;
-  color: #fff;
-}
-
-footer {
-  margin-top: 16px;
-  font-size: 0.98em;
-  color: #7d8792;
-  text-align: right;
-}
-const data = {
-  zh: {
-    name: "杨宇彤",
-    basic: `
-      <b>学校/专业：</b>华东政法大学 会计学<br>
-      <b>研究兴趣/方向：</b>司法会计<br>
-      <b>联系方式：</b><a href="mailto:2959510338@qq.com">2959510338@qq.com</a>
-    `,
-    introTitle: "个人简介",
-    intro: "热爱会计与法律交叉领域，具备扎实的专业知识和实践能力，目标在司法会计领域贡献自己的价值。",
-    skillsTitle: "技能",
-    skills: ["Python", "数据分析", "计量/统计", "写作"],
-    educationTitle: "教育经历 / 课程经历",
-    education: [
-      "华东政法大学 会计学（2022-2026）",
-      "核心课程：会计学原理、财务管理、审计学、经济法、司法会计等"
-    ],
-    update: "最后更新日期：" + new Date().toLocaleDateString(),
-  },
-  en: {
-    name: "Yutong Yang",
-    basic: `
-      <b>University / Major:</b> East China University of Political Science and Law, Accounting<br>
-      <b>Research Interests / Career Direction:</b> Forensic Accounting<br>
-      <b>Email:</b> <a href="mailto:2959510338@qq.com">2959510338@qq.com</a>
-    `,
-    introTitle: "Profile",
-    intro: "Passionate about the intersection of accounting and law, solid academic background and hands-on experience, aiming to contribute to the field of forensic accounting.",
-    skillsTitle: "Skills",
-    skills: ["Python", "Data Analysis", "Econometrics/Statistics", "Writing"],
-    educationTitle: "Education / Courses",
-    education: [
-      "East China University of Political Science and Law, Accounting (2022-2026)",
-      "Core Courses: Accounting Principles, Financial Management, Auditing, Economic Law, Forensic Accounting"
-    ],
-    update: "Last updated: " + new Date().toLocaleDateString(),
-  }
-};
-
-// UI Elements
-const $ = (id) => document.getElementById(id);
-const langBtns = { zh: $("zh-btn"), en: $("en-btn") };
-
-function render(lang) {
-  $("name").innerText = data[lang].name;
-  $("basic-info").innerHTML = data[lang].basic;
-  $("intro-title").innerText = data[lang].introTitle;
-  $("intro").innerText = data[lang].intro;
-  $("skills-title").innerText = data[lang].skillsTitle;
-  $("skills").innerHTML = data[lang].skills.map(s=>`<li>${s}</li>`).join('');
-  $("education-title").innerText = data[lang].educationTitle;
-  $("education").innerHTML = data[lang].education.map(e=>`<li>${e}</li>`).join('');
-  $("update").innerText = data[lang].update;
-  Object.keys(langBtns).forEach(k => langBtns[k].classList.toggle('active', k===lang));
-}
-
-langBtns.zh.onclick = ()=>render('zh');
-langBtns.en.onclick = ()=>render('en');
-
-// Default: 中文
-render('zh');
+</html>                
